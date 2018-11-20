@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Ingreso Producto</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../css/vendedor.css" >
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+  </head>
+  <body>
+        <nav class="navbar navbar-dark bg-primary">
+                <a class="navbar-brand" href="#">
+                  <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+                   Menu</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                  <div class="navbar-nav">
+                        <a class="nav-item nav-link active" href="vendedor.html">Inicio <span class="sr-only">(current)</span></a>
+                        <a class="nav-item nav-link active" href="ingresarproducto.html">Ingresar producto</a>
+                        <a class="nav-item nav-link active" href="buscarproducto.html">Buscar producto</a>
+                        <a class="nav-item nav-link active" href="carrito.html">Carrito</a>
+                        <a class="nav-item nav-link active" href="mispedidos.html">Mis pedidos</a>
+                        <a class="nav-item nav-link active" href="misventas.html">Mis ventas</a>
+                        <a class="nav-item nav-link active" href="../index.html">Salir</a>
+                    </div>
+                </div>
+        </nav>
+            <br>
+        <div class="container">
+                <form   action="IngresoProducto" method="POST">        
+                <h3>Ingrese producto nuevo</h3>
+                    <div class="form-group">
+                        <label for="codigo" >Codigo</label>
+                        <input type="text" class="form-control" id="codigo"  name="id_producto">
+                    </div>
+                    <div class="form-group">
+                            <label for="nombre" >Nombre</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="precio" >Precio</label>
+                        <input type="decimal" class="form-control" id="precio" name="precio">
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion" >Descripción</label>
+                        <textarea type="text" class="form-control" id="descripcion" name="descripcion"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="foto" >Foto</label>
+                        <input type="text" class="form-control" id="foto" name="foto">
+                    </div>
+                    <div class="form-group">
+                        <label for="cantidad" >Cantidad de producto</label>
+                        <input type="text" class="form-control" id="cantidad" name="stock">
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Categoria</label>
+                        <select class="form-control" id="exampleFormControlSelect1" name="id_categoria">
+                            <option value="1">Refrigeradoras</option>
+                            <option value="2">Cocinas</option>
+                            <option value="3">Microondas</option>
+                            
+                        </select>
+                        
+                    </div>
+                    <div class="form-group">
+                            <label for="exampleFormControlSelect1">Proveedor</label>
+                            <select class="form-control" id="exampleFormControlSelect1" name="id_proveedor">
+                                <option value="1">Refrigeradoras</option>
+                                <option value="2">Cocinas</option>
+                                <option value="3">Microondas</option>
+                                
+                            </select>
+                            
+                    </div>
+                    <br>
+                    <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary text-justify" >Ingresar producto</button>
+                    </div>
+                    
+                    
+                </form>
+            </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+  </body>
+</html>
