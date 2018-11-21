@@ -30,7 +30,7 @@
                                       Mis consultas
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                      <a class="dropdown-item" href="empleados.html">Empleados</a>
+                                      <a class="dropdown-item" href="empleados.php">Empleados</a>
                                       <a class="dropdown-item" href="ventas.html">Ventas</a>
                                      
                                 </li>
@@ -44,6 +44,10 @@
             <form class="weather-box" action="IngresoEmpleado" method="POST">
                     <h3>Ingreso de empleados</h3>
                     <br>
+                    <div class="form-group">
+                        <label for="id" >Nombre</label>
+                        <input type="text" class="form-control" id="id"  name="id_empleado">
+                    </div>
                     <div class="form-group">
                        <label for="nombre" >Nombre</label>
                        <input type="text" class="form-control" id="nombre"  asp-for="nombre">
@@ -79,7 +83,7 @@
                     <h4>Credenciales de usuario</h4>   
                    
                    <div class="form-group">
-                       <label for="passsword" >Password</label>
+                       <label for="password" >Password</label>
                        <input type="password" class="form-control" id="password"  name="password">
                    </div>
                        <div class="form-group text-center">
@@ -88,6 +92,34 @@
                    </div>
                </form>
       </div>
+      <?php
+          include('index.php');
+          if(isset($_post['IngresarProducto'])){
+            $id=$_post['id_empleado'];
+            $nombre=$_post['nombre'];
+            $apellido=$_post['apellido'];
+            $dni=$_post['dni'];
+            $telefono=$_post['telefono'];
+            $direccion=$_post['direccion'];
+            $password=$_post['password'];
+            $ocupacion=$_post['ocupacion'];
+            
+            switch($ocupacion){
+                case 'Administrador':
+                    $con=oci_connect($user,$pass);
+                    $sql='insert into  empleado values('$id','$ocupacion','$nombre','$apellido','$direccion','$dni','$telefono','$password','getdate()')';
+                    $union=oci_parse($con,$sql);
+                    oci_execute($union);
+                break;
+
+                case 'Cajero':
+                break;
+
+                case 'Vendedor':
+                break;
+            }
+        }
+        ?> 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

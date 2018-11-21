@@ -30,7 +30,7 @@
                                       Mis consultas
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                      <a class="dropdown-item" href="empleados.html">Empleados</a>
+                                      <a class="dropdown-item" href="empleados.php">Empleados</a>
                                       <a class="dropdown-item" href="ventas.html">Ventas</a>
                                      
                                 </li>
@@ -40,88 +40,99 @@
                 </div>
          </nav>
          <br>
-         <div class="row">
-         <div class="container col-7">
-      <table class="table table-striped table-responsive-lg">
-          <thead >
-              <tr>
-                  <th>Codigo</th>
-                  <th>Nombre</th>
-                  <th>Apellido</th>
-                  <th>Dni</th>
-                  <th>Direccion</th>
-                  <th>Telefono</th>
-                  <th>Ocupación</th>
-                  <th></th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr>
-                  <td scope="row"></td>
-                  <td scope="row"></td>
-                  <td scope="row"></td>
-                  <td scope="row"></td>
-                  <td scope="row"></td>
-                  <td scope="row"></td>
-                  <td scope="row"></td>
-                  <td scope="row"><a href="#"><i class="far fa-trash-alt"></i></a></i></td>
-              </tr>
-              
-          </tbody>
-      </table>
-    </div>
-         </div>
-         <div class="row">
-    <div class="container col-5  ">
-            <table class="table table-striped table-responsive-lg">
-                <thead >
+        
+            <?php
+            $usuario = "proyecto" ;
+            $contraseña = "oracle" ;
+            $db = "localhost/xe" ;
+            $con = oci_connect( $usuario , $contraseña , $db ) ;
+           
+         
+            $stid = oci_parse( $con , 'SELECT * FROM empleado' ) ;
+        oci_execute ( $stid ) ;
+         echo "<div class='col-12 text-center'>";
+        echo "<table class='table table-striped table-responsive-lg'>\n";
+        echo "<thead >
                     <tr>
-                        <th>Codigo cajero</th>
-                        <th>Sueldo</th>
-                        <th>Num caja</th>
                         <th>Codigo empleado</th>
+                        <th>Ocupacion</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Direccion</th>
+                        <th>Dni</th>
+                        <th>Telefono</th>
+                        <th>Contraseña</th>
+                        <th>Fecha</th>
+                        <th></th>
                         
                     </tr>
-                </thead>
-                <tbody>
-                    
-                    <tr>
-                            <td scope="row"></td>
-                            <td scope="row"></td>
-                            <td scope="row"></td>
-                            <td scope="row"></td>
-                            <td scope="row"><a href="#"><i class="far fa-trash-alt"></i></a></i></td>
-                            
-                    </tr>
-                </tbody>
-            </table>
+                </thead>";
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+            echo "<tr>\n";
+            foreach ($row as $item) {
+                echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
+                
+            }
+            echo " <td><a href='#'><i class='far fa-trash-alt'></i></a></i></td>";
+            echo "</tr>\n";
+        }
+        echo "</table>\n";
+         echo "</div>";
 
-    </div>
-         </div>
-         <div class="row">
-             <div class="container col-5">
-                    <table class="table table-striped table-responsive-lg">
-                            <thead >
-                                <tr>
-                                    <th>Codigo vendedor</th>
-                                    <th>Sueldo base</th>
-                                    <th>Codigo empleado</th>
-                                    
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td scope="row"></td>
-                                    <td scope="row"></td>
-                                    <td scope="row"></td>
-                                    <td scope="row"><a href="#"><i class="far fa-trash-alt"></i></a></i></td>
-                                </tr>
-                                
-                            </tbody>
-                        </table>
-             </div>
-         </div>
-            
+
+
+         $stid2 = oci_parse( $con , 'SELECT * FROM vendedor' ) ;
+        oci_execute ( $stid2 ) ;
+         echo "<div class='col-6 m-auto'>";
+         echo "<table class='table table-striped table-responsive-lg'>\n";
+         echo "<thead >
+                     <tr>
+                        <th>Codigo vendedor</th>
+                        <th>Sueldo base</th>
+                        <th>Codigo empleado</th>
+                         
+                     </tr>
+                 </thead>";
+         while ($row = oci_fetch_array($stid2, OCI_ASSOC+OCI_RETURN_NULLS)) {
+             echo "<tr>\n";
+             foreach ($row as $item) {
+                 echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
+                 
+             }
+             echo " <td><a href='#'><i class='far fa-trash-alt'></i></a></i></td>";
+             echo "</tr>\n";
+         }
+         echo "</table>\n";
+          echo "</div>";
+        
+
+          $stid3 = oci_parse( $con , 'SELECT * FROM cajero' ) ;
+          oci_execute ( $stid3 ) ;
+           echo "<div class='col-6 m-auto'>";
+           echo "<table class='table table-striped table-responsive-lg'>\n";
+           echo "<thead >
+                       <tr>
+                          <th>Codigo cajero</th>
+                          <th>Numero de caja</th>
+                          <th>Sueldo</th>
+                          <th>Codigo empleado</th>
+                           
+                       </tr>
+                   </thead>";
+           while ($row = oci_fetch_array($stid3, OCI_ASSOC+OCI_RETURN_NULLS)) {
+               echo "<tr>\n";
+               foreach ($row as $item) {
+                   echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
+                   
+               }
+               echo " <td><a href='#'><i class='far fa-trash-alt'></i></a></i></td>";
+               echo "</tr>\n";
+           }
+           echo "</table>\n";
+            echo "</div>";
+        ?>
+        
+
         
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
