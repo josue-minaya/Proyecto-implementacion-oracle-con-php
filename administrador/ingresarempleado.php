@@ -41,9 +41,13 @@
             </nav>
         <br>
       <div class="container">
-            <form class="weather-box" action="IngresoEmpleado" method="POST">
+            <form class="weather-box" action="ingresoempleado.php" method="POST">
                     <h3>Ingreso de empleados</h3>
                     <br>
+                    <div class="form-group">
+                       <label for="id" >ID</label>
+                       <input type="number" class="form-control" id="id"  asp-for="id">
+                   </div>
                     <div class="form-group">
                        <label for="nombre" >Nombre</label>
                        <input type="text" class="form-control" id="nombre"  asp-for="nombre">
@@ -83,26 +87,26 @@
                        <input type="password" class="form-control" id="password"  name="password">
                    </div>
                        <div class="form-group text-center">
-                           <button class="btn btn-primary " style="width:170px " name="IngresarProducto">Ingresar Empleado</button>
+                           <button class="btn btn-primary " style="width:170px " name="IngresoProducto">Ingresar Empleado</button>
                        </div>
                    </div>
                </form>
       </div>
       <?php
       //conexion
-      $usuario = "proyecto";
-      $password = "oracle";
+      $usuario = "SYSTEM";
+      $password = "1234";
       $db = "localhost/xe";
       $con = oci_connect($usuario, $password, $db);
       
-   
+      if(isset($_POST['ingresoempleado.php'])){
       //oracle query
       $stid = oci_parse($con, "INSERT INTO empleado (id_empleado,ocupacion,
-     nombre,apellido,direccion,dni,telefono,contrasena,fecha)
+     nombre,apellido,direccion,dni,telefono,pass,fecha)
      VALUES(:id_empleado,:ocupacion,:nombre,:apellido,:direccion,:dni,:telefono,:pass,:fecha)");
    
       //variables
-      $id=['id_empleado'];
+      $id=$_POST['id_empleado'];
       $nombre=$_POST['nombre'];
       $apellido=$_POST['apellido'];
       $dni=$_POST['dni'];
@@ -110,7 +114,7 @@
       $direccion=$_POST['direccion'];
       $pass=$_POST['password'];
       $ocupacion=$_POST['ocupacion'];
-      $fecha= sysdate();
+      $fecha= date("D-M-Y");
    
       //binding    
       oci_bind_by_name($stid, ":id_empleado", $id);
@@ -131,7 +135,7 @@
    
       //cierre de conexion
       oci_close($con);  
-   
+      }
   ?>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
