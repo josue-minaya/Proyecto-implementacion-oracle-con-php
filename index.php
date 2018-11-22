@@ -14,33 +14,49 @@
     
     
       <div class="weather-box">
-        <form action="index" method="post">
+        <form action="index.php" method="post">
           <div class="form-row">
             <div class="col">
-              <label>Usuario:</label>
+              <label for="id">Usuario:</label>
             </div>
             <div class="col">
-              <input type="text" class="form-control" >
+              <input type="text" class="form-control" id="id" >
             </div>
           </div>
           <br>
           <div class="form-row">
             <div class="col">
-              <label >Contraseña:</label>
+              <label for="pass">Contraseña:</label>
             </div>
             <div class="col">
-              <input type="text" class="form-control" >
+              <input type="text" class="form-control" id="pass" >
             </div>
           </div>
           <div class="text-center p-3">
-            <button type="button" class="btn btn-primary" name="ingresar">Ingresar</button>
+            <button type="submit" class="btn btn-primary" name="ingresar">Ingresar</button>
           </div>
 
         </form>  
            
       </div>
     
-    
+      <?php
+        session_start();
+        $con = oci_connect('SYSTEM', '1234', 'localhost/XE');
+        if(isset($_POST['submit'])){
+            $user = $_POST['id'];
+            $pass = $_POST['pass'];
+            $s = oci_parse($con, "select id_empleado,pass from empleado where id_empleado='$user' and pass='$pass'");       
+            oci_execute($s);
+            //$row = oci_fetch_all($s, $res);
+            //if($row){
+             //       $_SESSION['user']=$user;
+            //        $_SESSION['time_start_login'] = time();
+            echo "Ha ingresado";
+            } else{
+              echo "Usuario o contrasena equivocada";
+            }
+     ?>
 
 
 
