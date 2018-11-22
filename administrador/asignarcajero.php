@@ -41,22 +41,25 @@
             </nav>
         <br>
         <div class="container">
-                <form  class="weather-box" asp-action="AsignacionCajero" method="POST">
+                <form  class="weather-box" action="asignarcajero.php" method="POST">
                         <h3>Asignar Cajero</h3>
                         <br>     
-                       
+                        <div class="form-group">
+                            <label for="id" >Id cajero</label>
+                            <input type="number" class="form-control" id="id"  name="id_cajero">
+                        </div>
                          <div class="form-group">
                             <label for="numcaja" >N° caja</label>
-                            <input type="number" class="form-control" id="numcaja"  asp-for="numcaja">
+                            <input type="number" class="form-control" id="numcaja"  name="numcaja">
                         </div>
                         
                         <div class="form-group">
                             <label for="sueldo">Sueldo</label>
-                            <input type="number" class="form-control" id="sueldo"  asp-for="sueldo">
+                            <input type="number" class="form-control" id="sueldo"  name="sueldo">
                         </div>
                         <div class="form-group">
                             <label for="ide" >Id empleado</label>
-                            <input type="number" class="form-control" id="ide"  asp-for="EmpleadoId">
+                            <input type="number" class="form-control" id="ide"  name="id_empleado">
                         </div>
                             <br>
                             <br>
@@ -65,6 +68,42 @@
                             </div>
                     </form>
         </div>
+        <?php
+      //conexion
+      $usuario = "proyecto";
+      $password = "oracle";
+      $db = "localhost/xe";
+      $con = oci_connect($usuario, $password, $db);
+   
+      //oracle query
+      $stid = oci_parse($con, "INSERT INTO cajero (id_cajero,numcaja,
+     sueldo,id_empleado)
+     VALUES(:id_cajero,:numcaja,:sueldo,:id_empleado)");
+   
+      //variables
+      $id=['id_cajero'];
+      $numcaja=$_POST['numcaja'];
+      $sueldo=$_POST['sueldo'];
+      $id_empleado=$_POST['id_empleado'];
+   
+   
+      //binding    
+      oci_bind_by_name($stid, ":id_cajero", $id);
+      oci_bind_by_name($stid, ":numcaja", $numcaja);
+      oci_bind_by_name($stid, ":sueldo", $sueldo);
+      oci_bind_by_name($stid, ":id_empleado", $id_empleado);
+      
+     
+      //ejecucion
+      oci_execute($stid);                        
+                     
+                             
+      oci_free_statement($stid);
+   
+      //cierre de conexion
+      oci_close($con);  
+   
+  ?>
       
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
