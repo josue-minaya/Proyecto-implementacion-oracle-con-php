@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Buscar producto</title>
+    <title>Detalle producto</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="../css/vendedor.css" >
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
   </head>
@@ -23,32 +23,53 @@
                         <a class="nav-item nav-link active" href="ingresarproducto.html">Ingresar producto</a>
                         <a class="nav-item nav-link active" href="buscarproducto.html">Buscar producto</a>
                         <a class="nav-item nav-link active" href="carrito.html">Carrito</a>
-                        <a class="nav-item nav-link active" href="mispedidos.php">Mis pedidos</a>
+                        <a class="nav-item nav-link active" href="mispedidos.html">Mis pedidos</a>
                         <a class="nav-item nav-link active" href="misventas.html">Mis ventas</a>
                         <a class="nav-item nav-link active" href="../index.html">Salir</a>
                     </div>
                 </div>
         </nav>
             <br>
-        <div class="container">
-                <form action="detalle.php" method="post" class="formulario">        
-                <h3>Búsqueda de Productos</h3>
-                    <div class="form-group ">
-                        <label for="codigo">Codigo de producto</label>
-                        <input type="text" class="form-control" id="codigo"  name="Id">
-                    </div>
+            <div class="container">    
+        <?php
+            $usuario = "proyecto" ;
+            $contraseña = "oracle" ;
+            $db = "localhost/xe" ;
+            $con = oci_connect( $usuario , $contraseña , $db ) ;
+           
+         $id=$_POST['cod'];
+             $stid = oci_parse( $con , "SELECT numboleta,v.fecha,v.id_pedido FROM ventas v join pedido p 
+                    on (v.id_pedido=p.id_pedido)
                     
-                    <br>
-                    
-                    <div class="form-group text-center">
-                        <button type="submit" class="btn btn-primary" style="width:170px " name="IngresarProducto">Buscar</button>
-                    </div>
-                    
-                </form>
+                    where p.id_vendedor=$id
+             order by fecha desc" ) ;
+                 oci_execute ( $stid ) ;
                 
-                
-            </div>
-      
+                  echo "<div class='col m-auto'>";
+                  echo "<table class='table table-striped '>\n";
+                  echo "<thead >
+                              <tr>
+                                 <th>N° boleta</th>
+                                 <th>Fecha</th>
+                                 <th>Id pedido</th>
+                                 
+                              </tr>
+                          </thead>";
+                  while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+                      echo "<tr>\n";
+                      foreach ($row as $item) {
+                          echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>";
+                          
+                      }
+                      echo "</tr>\n";
+                  }
+                 
+                  echo "</table>\n";
+                  
+          echo "</div>";
+        ?>
+        
+        </div>      
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

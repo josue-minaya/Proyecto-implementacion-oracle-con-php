@@ -23,7 +23,7 @@
                         <a class="nav-item nav-link active" href="ingresarproducto.html">Ingresar producto</a>
                         <a class="nav-item nav-link active" href="buscarproducto.html">Buscar producto</a>
                         <a class="nav-item nav-link active" href="carrito.html">Carrito</a>
-                        <a class="nav-item nav-link active" href="mispedidos.html">Mis pedidos</a>
+                        <a class="nav-item nav-link active" href="mispedidos.php">Mis pedidos</a>
                         <a class="nav-item nav-link active" href="misventas.html">Mis ventas</a>
                         <a class="nav-item nav-link active" href="../index.html">Salir</a>
                     </div>
@@ -38,90 +38,106 @@
             $con = oci_connect( $usuario , $contraseña , $db ) ;
            
          $id=$_POST['Id'];
-            $stid = oci_parse( $con , "SELECT * FROM Producto where id_producto= '$id' ") ;
+             $stid = oci_parse( $con , "SELECT id_producto FROM producto where id_producto='$id'" ) ;
                  oci_execute ( $stid ) ;
-                 oci_fetch($stid);
-        echo " <form  method='POST' action=''>
-            
-        <div class='form-group'>
-        <h3 for='foto' >Datos del producto</h3>
-        <div>
-            <table class='table table-striped'>
-                <thead >
-                    <tr>
-                        <th scope='col'>Id</th>
-                        
-                    </tr>
-                </thead>";
-               
-                while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) { ?>
-                    echo'<tbody>
-                            <tr>
-                                <td scope="row">
-                                <?=$row["id_producto"]?>
-                                </td>
-                            </tr>
-                        </tbody>';
+                 $stid1 = oci_parse( $con , "SELECT nombre FROM producto where id_producto='$id'" ) ;
+                 oci_execute ( $stid1 ) ;
+                 $stid2 = oci_parse( $con , "SELECT precio FROM producto where id_producto='$id'" ) ;
+                 oci_execute ( $stid2 ) ;
+                 $stid3 = oci_parse( $con , "SELECT stock FROM producto where id_producto='$id'" ) ;
+                 oci_execute ( $stid3 ) ;
+                 $stid4 = oci_parse( $con , "SELECT foto FROM producto where id_producto='$id'" ) ;
+                 oci_execute ( $stid4 ) ;
+                  echo "<div class='col m-auto'>";
+                  echo "<table class='table table-striped '>\n";
+                  echo "<thead >
+                              <tr>
+                                 <th>Id</th>
+                              </tr>
+                          </thead>";
+                  while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+                      echo "<tr>\n";
+                      foreach ($row as $item) {
+                          echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>";
+                          
+                      }
+                      echo "</tr>\n";
+                  }
+                  echo "<thead >
+                              <tr>
+                                 <th>Nombre</th>
+                                
+                                  
+                              </tr>
+                          </thead>";
+                          while ($row = oci_fetch_array($stid1, OCI_ASSOC+OCI_RETURN_NULLS)) {
+                            echo "<tr>\n";
+                            foreach ($row as $item) {
+                                echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>";
+                                
+                            }
+                            echo "</tr>\n";
+                        }       
 
-                    
-              <?php  }
-              echo
-                "
-                <thead>
-                    <tr>
-                        <th scope='col'>Descipción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td scope='row'>@Model.especificaciones</td>
-                    </tr>
-                </tbody>
-                <thead>
-                    <tr>
-                        <th scope='col'>Precio</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td scope='row'>@Model.precio</td>
-                    </tr>
-                </tbody>
-                <thead>
-                    <tr>
-                        <th scope='col'>Stock</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td scope='row'>@Model.stock</td>
-                    </tr>
-                </tbody>
-                <thead>
-                    <tr>
-                        <th scope='col'>Foto</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td scope='row'><img class=' img-fluid' src='@Model.foto'></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    
-    
-    
-    <div class='form-group text-center'>
-        <a href='~/Vendedor/Pedidos' type='submit' class='btn btn-primary' style='width:170px' name='IngresarProducto'>Agregar carrito</a>
-    </div>
-    
-</form>"
+                   echo "<thead >
+                              <tr>
+                                 <th>Precio</th>
+                                
+                                  
+                              </tr>
+                          </thead>";
+
+                          while ($row = oci_fetch_array($stid2, OCI_ASSOC+OCI_RETURN_NULLS)) {
+                            echo "<tr>\n";
+                            foreach ($row as $item) {
+                                echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>";
+                                
+                            }
+                            echo "</tr>\n";
+                        }
+                          echo "<thead >
+                          <tr>
+                             <th>Stock</th>
+                            
+                              
+                          </tr>
+                      </thead>";
+                      while ($row = oci_fetch_array($stid3, OCI_ASSOC+OCI_RETURN_NULLS)) {
+                        echo "<tr>\n";
+                        foreach ($row as $item) {
+                            echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>";
+                            
+                        }
+                        echo "</tr>\n";
+                    }
+
+                      echo "<thead >
+                      <tr>
+                         <th>Foto</th>
+                        
+                          
+                      </tr>
+                  </thead>";
+                  while ($row = oci_fetch_array($stid4, OCI_ASSOC+OCI_RETURN_NULLS)) {
+                    echo "<tr>\n";
+                    foreach ($row as $item) {
+                        echo "    <td><img src='$item' class='img-fluid'></td>";
+                        
+                    }
+                    echo "</tr>\n";
+                }
+                 
+                     
+                   
         
+                  echo "</table>\n";
+                  echo "</div>";
            
         
         ?>
+        <div class="text-center">
+            <input type="submit" value="Agregar" class="btn btn-primary">
+        </div>
            
         </div>      
     <!-- Optional JavaScript -->
