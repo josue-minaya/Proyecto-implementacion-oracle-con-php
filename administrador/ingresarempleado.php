@@ -70,7 +70,7 @@
                    </div>
                    <div class="form-group">
                            <label for="exampleFormControlSelect1">Puesto</label>
-                           <select class="form-control" id="exampleFormControlSelect1" name="nombre_puesto">
+                           <select class="form-control" id="exampleFormControlSelect1" name="ocupacion">
                                <option value="Administrador">Administrador</option>
                                <option value="Vendedor">Vendedor</option>
                                <option value="Cajero">Cajero</option>
@@ -93,33 +93,50 @@
                </form>
       </div>
       <?php
-          include('index.php');
-          if(isset($_post['IngresarProducto'])){
-            $id=$_post['id_empleado'];
-            $nombre=$_post['nombre'];
-            $apellido=$_post['apellido'];
-            $dni=$_post['dni'];
-            $telefono=$_post['telefono'];
-            $direccion=$_post['direccion'];
-            $password=$_post['password'];
-            $ocupacion=$_post['ocupacion'];
-            
-            switch($ocupacion){
-                case 'Administrador':
-                    $con=oci_connect($user,$pass);
-                    $sql='insert into  empleado values('$id','$ocupacion','$nombre','$apellido','$direccion','$dni','$telefono','$password','getdate()')';
-                    $union=oci_parse($con,$sql);
-                    oci_execute($union);
-                break;
-
-                case 'Cajero':
-                break;
-
-                case 'Vendedor':
-                break;
-            }
-        }
-        ?> 
+      //conexion
+      $usuario = "proyecto";
+      $password = "oracle";
+      $db = "localhost/xe";
+      $con = oci_connect($usuario, $password, $db);
+      $fechaform = SELECT CONVERT(VARCHAR(9), GETDATE(), 6) AS [DD MON YY]; //formato de fecha para oracle
+   
+      //oracle query
+      $stid = oci_parse($con, "INSERT INTO empleado (id_empleado,ocupacion,
+     nombre,apellido,direccion,dni,telefono,contrasena,fecha)
+     VALUES(:id_empleado,:ocupacion,:nombre,:apellido,:direccion,:dni,:telefono,:pass,:fecha)");
+   
+      //variables
+      $id=['id_empleado'];
+      $nombre=$_POST['nombre'];
+      $apellido=$_POST['apellido'];
+      $dni=$_POST['dni'];
+      $telefono=$_POST['telefono'];
+      $direccion=$_POST['direccion'];
+      $pass=$_POST['password'];
+      $ocupacion=$_POST['ocupacion'];
+      $fecha= $fechaform;
+   
+      //binding    
+      oci_bind_by_name($stid, ":id_empleado", $id);
+      oci_bind_by_name($stid, ":ocupacion", $ocupacion);
+      oci_bind_by_name($stid, ":nombre", $nombre);
+      oci_bind_by_name($stid, ":apellido", $apellido);
+      oci_bind_by_name($stid, ":direccion", $direccion);
+      oci_bind_by_name($stid, ":dni", $dni);
+      oci_bind_by_name($stid, ":telefono", $telefono);
+      oci_bind_by_name($stid, ":pass", $pass);
+      oci_bind_by_name($stid, ":fecha", $fecha);
+     
+      //ejecucion
+      oci_execute($stid);                        
+                     
+                             
+      oci_free_statement($stid);
+   
+      //cierre de conexion
+      oci_close($con);  
+   
+  ?>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

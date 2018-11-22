@@ -30,57 +30,23 @@
                 </div>
         </nav>
         <br>
+        
         <div class="container">
-            <form class="formulario">
-                    <h3 class="text-left">Mis ventas</h3>
-                    <div class="form-row">
-                            <div class="col-2">
-                            <img src="#" alt="foto">
-                            </div>
-                            <div class="col-10">
-                                <div class="form-row">
-                                <label for="">precio</label>
-                                </div>
-                                <div class="form-row">
-                                        <label for="">Descrip</label>
-                                </div>
-                                <div class="form-row">
-                                        <label for="">cantidad</label>
-                                </div>
-                                <div class="form-row">
-                                        <label for="">Total</label>
-                                </div>
-                                
-                            </div>
-                    </div>
-                    <div class="form-row">
-                            <div class="col-2">
-                            <img src="#" alt="foto">
-                            </div>
-                            <div class="col-10">
-                                <div class="form-row">
-                                <label for="">precio</label>
-                                </div>
-                                <div class="form-row">
-                                        <label for="">Descrip</label>
-                                </div>
-                                <div class="form-row">
-                                        <label for="">cantidad</label>
-                                </div>
-                                <div class="form-row">
-                                        <label for="">Total</label>
-                                </div>
-                                
-                            </div>
-                    </div>
-
+            <form class="formulario" action="ventas.php" method="post">
+                 <div class="form-group container">
+                    <label for="cod" class="">Codigo</label>
+                   <input type="text"  class="form-control" name="cod">
+                </div>   
+                <div class="form-group text-center">
+                    
+                   <input type="submit"  class="btn btn-primary" value="Buscar">
+                </div>    
                    
             </form>
+           
             <br>
-            <div>
-                <label for="">Monto total</label>
-            </div>
-        </div>    
+            
+        </div>  
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
