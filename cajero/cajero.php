@@ -34,16 +34,34 @@
                     <br>
             </form>
             <?php
-                 $usuario = "proyecto" ;
-                 $contraseña = "oracle" ;
+                 $usuario = "SYSTEM" ;
+                 $contraseña = "1234" ;
                  $db = "localhost/xe" ;
                  
-                 $con = oci_connect( $usuario , $contraseña , $db ) ;
+                 $con = oci_connect($usuario,$contraseña,$db);
                  
-                 if(isset($_POST['Ingresar'])){
-                    /*el code php*/
+                 if(isset($_POST['cajero.php'])){
+                    $stid = oci_parse($con, "INSERT INTO cajero (id_cajero,numcaja,
+                    sueldo,id_empleado) 
+                    VALUES(:id_cajero,:numcaja,:sueldo,:id_empleado)");
+
+                     //variables
+                    $id=$_POST['id_empleado'];
+                    $numcaja=$_POST['numcaja'];
+                    $sueldo=$_POST['sueldo'];
+                    $id_empleado=$_POST['id_empleado'];
+
+                    //binding    
+                    oci_bind_by_name($stid, ":id_empleado", $id);
+                    oci_bind_by_name($stid, ":numcaja", $numcaja);
+                    oci_bind_by_name($stid, ":sueldo", $sueldo);
+                    oci_bind_by_name($stid, ":id_empleado", $id_empleado);
+    
+                    //ejecucion
+                    oci_execute($stid);                         
                     
-                    $nombre=$_POST['nombre'];
+                           
+                    oci_free_statement($stid);
                  
                  
                  $stid1 = oci_parse( $con , "SELECT id_pedido,fecha,monto_total,nombre FROM pedido p
@@ -78,8 +96,8 @@
               echo "</div>";}
             ?>
                 <?php
-            $usuario = "proyecto" ;
-            $contraseña = "oracle" ;
+            $usuario = "SYSTEM" ;
+            $contraseña = "1234" ;
             $db = "localhost/xe" ;
             
             $con = oci_connect( $usuario , $contraseña , $db ) ;
