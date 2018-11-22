@@ -45,15 +45,11 @@
                     <h3>Ingreso de empleados</h3>
                     <br>
                     <div class="form-group">
-                        <label for="id" >Nombre</label>
-                        <input type="text" class="form-control" id="id"  name="id_empleado">
-                    </div>
-                    <div class="form-group">
                        <label for="nombre" >Nombre</label>
                        <input type="text" class="form-control" id="nombre"  asp-for="nombre">
                    </div>
                    <div class="form-group">
-                       <label for="apellido" >Apeliido</label>
+                       <label for="apellido" >Apellido</label>
                        <input type="text" class="form-control" id="apellido"  asp-for="apellido">
                    </div>
                    <div class="form-group">
@@ -98,7 +94,7 @@
       $password = "oracle";
       $db = "localhost/xe";
       $con = oci_connect($usuario, $password, $db);
-      $fechaform = SELECT CONVERT(VARCHAR(9), GETDATE(), 6) AS [DD MON YY]; //formato de fecha para oracle
+      
    
       //oracle query
       $stid = oci_parse($con, "INSERT INTO empleado (id_empleado,ocupacion,
@@ -114,7 +110,7 @@
       $direccion=$_POST['direccion'];
       $pass=$_POST['password'];
       $ocupacion=$_POST['ocupacion'];
-      $fecha= $fechaform;
+      $fecha= sysdate();
    
       //binding    
       oci_bind_by_name($stid, ":id_empleado", $id);

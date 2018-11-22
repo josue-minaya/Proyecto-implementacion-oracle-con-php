@@ -70,8 +70,8 @@
         </div>
         <?php
       //conexion
-      $usuario = "proyecto";
-      $password = "oracle";
+      $usuario = "SYSTEM";
+      $password = "1234";
       $db = "localhost/xe";
       $con = oci_connect($usuario, $password, $db);
    
@@ -81,7 +81,7 @@
      VALUES(:id_cajero,:numcaja,:sueldo,:id_empleado)");
    
       //variables
-      $id=['id_cajero'];
+      $id=$_POST['id_cajero'];
       $numcaja=$_POST['numcaja'];
       $sueldo=$_POST['sueldo'];
       $id_empleado=$_POST['id_empleado'];
